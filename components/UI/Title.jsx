@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { StyleSheet, Text } from 'react-native'
 import { Colors } from '../../utils/Contants/Colors'
 
-const Title = props => {
+const Title = ({children}) => {
   return (
-    <Text style={styles.title}>Opponent's Guess</Text>
+    <Text style={styles.title}>{children}</Text>
   )
 }
 
@@ -15,8 +15,9 @@ Title.propTypes = {
 
 const styles = StyleSheet.create({
     title:{
+      fontFamily:'open-sans-bold',
         fontSize: 24,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: Colors.whiteText,
         textAlign: 'center',
         borderWidth: 2,
