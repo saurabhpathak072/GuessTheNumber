@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { TextInput, View, StyleSheet, Alert, Text } from "react-native";
+import { TextInput, View, StyleSheet, Alert, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import PrimaryButton from "../components/UI/PrimaryButton";
 import { validateNumber } from "../utils/utils";
 import { Colors } from "../utils/Contants/Colors";
@@ -26,6 +26,10 @@ const StartGameScreen = (props) => {
 		setInputNumber("");
 	};
 	return (
+		<ScrollView style={styles.screen}>
+		<KeyboardAvoidingView style={styles.screen}>
+
+		
 		<View style={styles.rootContainer}>
 			<Title>Guess my Number</Title>
 
@@ -49,12 +53,17 @@ const StartGameScreen = (props) => {
 				</View>
 			</Card>
 		</View>
+		</KeyboardAvoidingView>
+		</ScrollView>
 	);
 };
 
 StartGameScreen.propTypes = {};
 
 const styles = StyleSheet.create({
+	screen:{
+		flex: 1
+	},
 	rootContainer: {
 		marginTop: 100,
 		flex: 1,

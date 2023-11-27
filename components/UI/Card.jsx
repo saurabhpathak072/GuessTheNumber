@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { Colors } from '../../utils/Contants/Colors'
 
 const Card = ({children}) => {
+	const {width} = useWindowDimensions();
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, {marginTop: width > 350?18:36},{padding: width > 350?8:16}]}>
       {children}
     </View>
   )
@@ -17,8 +18,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginHorizontal: 24,
-		padding: 16,
-		marginTop: 36,
+		// padding: 16,
+		// marginTop: 36,
 		backgroundColor: Colors.backgroundColor,
 		borderRadius: 10,
 		elevation: 4,

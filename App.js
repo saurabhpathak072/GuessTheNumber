@@ -1,4 +1,4 @@
-import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
+import { StyleSheet, ImageBackground, SafeAreaView, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import StartGameScreen from "./screens/StartGameScreen";
 import { useState } from "react";
@@ -7,11 +7,13 @@ import { Colors } from "./utils/Contants/Colors";
 import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
 	const [userinput, setUserinput] = useState(null);
 	const [isGameOver, setIsGameOver] = useState(true);
 	const [guessRounds, setGuessRounds] = useState(0);
+	const [failed, setFailed] = useState(false);
 
 	const [fontsLoaded] = useFonts({
 		"open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -27,14 +29,16 @@ export default function App() {
 		setUserinput(pickedNumber);
 	};
 
-	const gameOverHandler = (numberOfRounds) => {
+	const gameOverHandler = (numberOfRounds, failed=false) => {
 		setIsGameOver(true);
-		setGuessRounds(numberOfRounds)
+		setGuessRounds(numberOfRounds);
+		setFailed(failed);
 	};
 
 	const startNewGameHandler = () => {
 		setUserinput(null);
 		setGuessRounds(0);
+		setFailed(false);
 	};
 
 	let screen = <StartGameScreen onPickedNumber={pickedNumberHandler} />;
@@ -48,10 +52,13 @@ export default function App() {
 				userNumber={userinput}
 				roundNumber={guessRounds}
 				onStartNewGame={startNewGameHandler}
+				isFailed={failed}
 			/>
 		);
 	}
 	return (
+		<>
+		<StatusBar networkActivityIndicatorVisible={true} style='light'/>
 		<LinearGradient
 			colors={[Colors.primaryGradient, Colors.secondarGradient]}
 			style={styles.rootScreen}
@@ -65,14 +72,20 @@ export default function App() {
 				<SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
 			</ImageBackground>
 		</LinearGradient>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
 	rootScreen: {
 		flex: 1,
+		overflow:'scroll'
 	},
 	backgroundImage: {
 		opacity: 0.15,
 	},
+	scrollView: {
+	flex:1,
+		marginHorizontal: 20,
+	  },
 });
